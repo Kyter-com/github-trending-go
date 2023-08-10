@@ -91,3 +91,6 @@ func main() {
 		fmt.Println("✅ Successfully posted to Mastodon")
 	}
 }
+
+// TODO: Fix lint errors
+// TODO: Add CodeQL
