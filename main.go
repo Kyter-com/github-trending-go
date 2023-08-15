@@ -14,7 +14,10 @@ import (
 func main() {
 	fmt.Println("🏁 Starting Bot")
 
-	godotenv.Load()
+	err := godotenv.Load()
+	if err != nil {
+		panic(err)
+	}
 
 	req, err := http.NewRequest(http.MethodGet, os.Getenv("CLOUDFLARE_KV_URL")+"/values/go", nil)
 	if err != nil {
@@ -64,7 +67,10 @@ func main() {
 		}
 	}
 	var metadata Metadata
-	json.Unmarshal([]byte(body), &metadata)
+	err = json.Unmarshal([]byte(body), &metadata)
+	if err != nil {
+		panic(err)
+	}
 
 	payload := strings.NewReader("status=" + metadata.Result.AuthorName + "/" + metadata.Result.RepoName + " - ⭐ " + metadata.Result.TotalStars + "\n" + repo)
 	req, err = http.NewRequest(http.MethodPost, "https://botsin.space/api/v1/statuses", payload)
